@@ -9,21 +9,22 @@ export PERL_CPANM_OPT="--quiet --notest -l $LIB_DIR"
 
 cd "$OPENSHIFT_PLACK_DIR/usr"
 
-if ! [ -d "$LIB_DIR" ]; then
-    mkdir -p "$LIB_DIR"
-    client_message "-----> Installing cpanm"
-    if ! (curl --silent https://raw.github.com/miyagawa/cpanminus/master/cpanm | perl - App::cpanminus 2>&1 | pipe_client_message); then
-        client_error "setup failed"
-        rm -rf "$LIB_DIR"
-        exit 1
-    fi
-fi
-
-client_message "-----> Installing or upgrading modules necessary for PLACK cartridge"
-if ! (cpanm --installdeps . 2>&1 | pipe_client_message); then
-    client_error "setup failed"
-    rm -rf "$LIB_DIR"
-    exit 1
-fi
+#if ! [ -d "$LIB_DIR" ]; then
+#    mkdir -p "$LIB_DIR"
+#    client_message "-----> Installing cpanm"
+#    if ! (curl --silent https://raw.github.com/miyagawa/cpanminus/master/cpanm | perl - App::cpanminus 2>&1 | pipe_client_message); then
+#        client_error "setup failed"
+#        rm -rf "$LIB_DIR"
+#        exit 1
+#    fi
+#fi
+#
+#client_message "-----> Installing or upgrading modules necessary for PLACK cartridge"
+#if ! (cpanm --installdeps . 2>&1 | pipe_client_message); then
+#    client_error "setup failed"
+#    rm -rf "$LIB_DIR"
+#    exit 1
+#fi
+PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'install Daemon::Control Plack Dancer2 App::cpanminus'
 
 client_result "Cartrdige setup completed"
