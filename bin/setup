@@ -25,6 +25,7 @@ cd "$OPENSHIFT_PLACK_DIR/usr"
 #    rm -rf "$LIB_DIR"
 #    exit 1
 #fi
+client_message "-----> Installing modules"
 PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'install Daemon::Control Plack Dancer2 App::cpanminus'
 
 client_result "Cartrdige setup completed"
